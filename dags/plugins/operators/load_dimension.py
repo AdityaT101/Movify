@@ -63,8 +63,8 @@ class LoadGenreStagingOperator(BaseOperator):
         s3client = boto3.client(
                    's3',
                    region_name="us-west-2",
-                   aws_access_key_id='AKIATILXASXETU7FBPZQ',
-                   aws_secret_access_key='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'
+                   aws_access_key_id='AKIATILXASXxxxx',
+                   aws_secret_access_key='k8yElAFcsnXTV+uFZTSDxxx'
             )
         
         
@@ -181,8 +181,8 @@ class LoadCastStagingOperator(BaseOperator):
         s3client = boto3.client(
                    's3',
                    region_name="us-west-2",
-                   aws_access_key_id='AKIATILXASXETU7FBPZQ',
-                   aws_secret_access_key='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'
+                   aws_access_key_id='AKIATILXASXxxxx',
+                   aws_secret_access_key='k8yElAFcsnXTV+uFZTSD5cxxxx'
             )
         
         
