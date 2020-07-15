@@ -19,20 +19,32 @@ d.	Which are the top 5 genres based on the CPI index.
 The system uses data from 2 different sources : -
 1.	The movies , genre and cast data is based on the following Kaggle dataset.
 
-(https://www.kaggle.com/rounakbanik/the-movies-dataset)
+    - (https://www.kaggle.com/rounakbanik/the-movies-dataset)
 
-There are multiple files containing the data for movies , genre and cast data.
-These files contain metadata for all 45,000 movies listed in the Full MovieLens Dataset. The dataset consists of movies released on or before July 2017. Data points include cast, crew, plot keywords, budget, revenue, posters, release dates, languages, production companies, countries, TMDB vote counts and vote averages.
-This dataset also has files containing 26 million ratings from 270,000 users for all 45,000 movies. Ratings are on a scale of 1-5 and have been obtained from the official GroupLens website.
+    There are multiple files containing the data for movies , genre and cast data.
+    These files contain metadata for all 45,000 movies listed in the Full MovieLens Dataset. The dataset consists of movies released on or before July 2017. Data       points include cast, crew, plot keywords, budget, revenue, posters, release dates, languages, production companies, countries, TMDB vote counts and vote           averages.
+    This dataset also has files containing 26 million ratings from 270,000 users for all 45,000 movies. Ratings are on a scale of 1-5 and have been obtained from       the official GroupLens website.
 
 
 
 2.	The CPI (consumer Price Index) Data is collected from the below source.
 
-(https://fred.stlouisfed.org/series/CUSR0000SS62031)
+    - (https://fred.stlouisfed.org/series/CUSR0000SS62031)
 
 
-This dataset contains Consumer Price Index for All Urban Consumers: Admission to Movies, Theaters, and Concerts in U.S. City Average
+      This dataset contains Consumer Price Index for All Urban Consumers: Admission to Movies, Theaters, and Concerts in U.S. City Average
+
+
+## Architecture and Schema
+
+a.	The above mentioned APIs are used to load data into the local system. This data is in form of a bunch of CSV files. Amongst those, the following are staged on     the S3 bucket –
+    1.	credits.csv
+    2.	movies_metadata.csv
+    3.	ratings.csv 
+    4.	CPI.csv
+            
+b.	Data is then staged from these files into the Staging tables in redshift using the COPY command. Further this staged data is converted into Dimension and Fact     tables on redshift itself. This is done using the Airflow scheduler where in each task is executed in a particular order. The schema for the facts and             dimensions is as shown below.
+
 
 
 
