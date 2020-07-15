@@ -37,11 +37,11 @@ The system uses data from 2 different sources : -
 
 ## Architecture 
 ---
-a.	The above mentioned APIs are used to load data into the local system. This data is in form of a bunch of CSV files. Amongst those, the following are staged on     the S3 bucket –
-    * credits.csv
-    * movies_metadata.csv
-    * ratings.csv 
-    * CPI.csv
+a.	The above mentioned APIs are used to load data into the local system. This data is in form of a bunch of CSV files. Amongst those, the following are staged on     the S3 bucket 
+    - credits.csv
+    - movies_metadata.csv
+    - ratings.csv 
+    - CPI.csv
             
 b.	Data is then staged from these files into the Staging tables in redshift using the COPY command. Further this staged data is converted into Dimension and Fact     tables on redshift itself. This is done using the Airflow scheduler where in each task is executed in a particular order. The Architecture  is as shown below.
 
@@ -56,7 +56,7 @@ b.	Data is then staged from these files into the Staging tables in redshift usin
 
 
 
-c.	For a staging the “Cast_staging “and the “Genre_staging” tables , some preprocessing is done on the data. This is cause the data is in form of a comma separated JSON structure. For eg, the genre column looks      like this – 
+c.	For a staging the “Cast_staging “and the “Genre_staging” tables , some preprocessing is done on the data. This is cause the data is in form of a comma separated JSON structure. For eg, the genre column looks      like this 
     [{"id": 10749, "name": "Romance"}, {"id": 18, "name": "Drama"}, {"id": 9648, "name": "Mystery"}]
 
     So to dump this into genre table,  ‘LoadGenreStagingOperator’ first ports in the Genre data from the S3 bucket.
@@ -67,28 +67,31 @@ c.	For a staging the “Cast_staging “and the “Genre_staging” tables , som
 
 
 
+
 ## Airflow Pipeline
 ---
 
 ![Movify](images/Data_pipeline.png)
 
-    a.	The data-pipelining is done as follows. The data is ported from S3 into staging and then into Dimension/Fact tables. The tables are created earlier itself.
-    b.	Further, we update the tables whenever new set of data is ported in based on the scheduler.
-    c.	We also run the quality checks on fact and dimension tables after every cycle is complete.
-    d.  Currently the DAG schedules the pipeline only once, but depending upon the requirement we can trigger it periodically everyday.
+    - The data-pipelining is done as follows. The data is ported from S3 into staging and then into Dimension/Fact tables. The tables are created earlier itself.
+    - Further, we update the tables whenever new set of data is ported in based on the scheduler.
+    - We also run the quality checks on fact and dimension tables after every cycle is complete.
+    - Currently the DAG schedules the pipeline only once, but depending upon the requirement we can trigger it periodically everyday.
 
 
-## Scalabiity and Related points
+
+
+## Scalability and Related points
 ---
-    a.<ins> What if data is increased by 100x?</ins>
+    * <ins> What if data is increased by 100x?</ins>
        Currently the processing is done on local system. If we need faster processing, then we can employ much faster EC2 instances to handle the load.
        Also, we can use SPARK clusters if required to process this faster. Also, we can program the DAG to take only the subset of data at a time rather than in bulk.
 
-    b. <ins>What if data pipeline needs to be run by 7am daily?</ins>
+    * <ins>What if data pipeline needs to be run by 7am daily?</ins>
        We can trigeer the DAG to run at any time daily. Also, currently, the DAG runs of local system. If this was running on an EC2 instance, the DAG would itself run 
        at every regular interval without any disturbance.
 
-    c. <ins>What if the database needs to be accessed by 100+ users?</ins>
+    * <ins>What if the database needs to be accessed by 100+ users?</ins>
        Redshift would be able to handle this load properly. Also, In order to optimize this further the tables can be redesigned / schema can be changed based on most common queries.
        Aggregated data tables can be provided beforehand to make queries more and more efficient.
 
@@ -129,15 +132,6 @@ Check http://localhost:8080/
 - `docker-compose ps` - List containers
 - `docker-compose down` - Stop containers
 
-## Other commands
-
-If you want to run airflow sub-commands, you can do so like this:
-
-- `docker-compose run --rm webserver airflow list_dags` - List dags
-- `docker-compose run --rm webserver airflow test [DAG_ID] [TASK_ID] [EXECUTION_DATE]` - Test specific task
-
-If you want to run/test python script, you can do so like this:
-- `docker-compose run --rm webserver python /usr/local/airflow/dags/[PYTHON-FILE].py` - Test python script
 
 ## Connect to database
 
