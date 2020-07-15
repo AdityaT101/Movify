@@ -8,10 +8,10 @@ The project involves performing ETL on data based on Movie_Metadata , Movie_genr
 
 Using the information derived from the dataset, the system would be able to answer typical question like  
 
-    - Which are the top 5 movie genres based on the average rating of the movie?
-    - Does casting particular people help increase the popularity of the movie?
-    - Finding out if releasing the film at a particular time - in a particular month might affect the revenue?
-    - Which are the top 5 genres based on the CPI index?
+    Which are the top 5 movie genres based on the average rating of the movie?
+    Does casting particular people help increase the popularity of the movie?
+    Finding out if releasing the film at a particular time - in a particular month might affect the revenue?
+    Which are the top 5 genres based on the CPI index?
 
 
 ## Data sources
@@ -82,6 +82,7 @@ c.	For a staging the “Cast_staging “and the “Genre_staging” tables , som
 
 ## Sample queries
 ---
+```
 1. Top 5 genres of movies based on a “avg_rating”
     
     select 
@@ -118,7 +119,7 @@ c.	For a staging the “Cast_staging “and the “Genre_staging” tables , som
     inner join time_dimension on movies_fact.release_date = time_dimension.date
     group by time_dimension.month 
     order by total_revenue desc
-    
+```    
   
 
 
