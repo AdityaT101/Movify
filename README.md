@@ -197,6 +197,7 @@ Go to Admin -> Connections and create "aws_credentials" AWS connection with foll
 ## Credits
 
 - Udacity for providing all the related contect.
+- I was originally inspired from this - https://github.com/alanchn31/Movalytics-Data-Warehouse
 
 
 
