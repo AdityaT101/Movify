@@ -45,7 +45,7 @@ a.	The above mentioned APIs are used to load data into the local system. This da
             
 b.	Data is then staged from these files into the Staging tables in redshift using the COPY command. Further this staged data is converted into Dimension and Fact     tables on redshift itself. This is done using the Airflow scheduler where in each task is executed in a particular order. The schema for the facts and             dimensions is as shown below.
 
-
+!![Movify](images/schema.PNG)
 
 
 
