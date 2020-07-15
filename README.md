@@ -1,19 +1,40 @@
-Airflow tutorial
+Project Overview
 ---
 
-This is the code for [Apache Airflow Tutorials](https://www.youtube.com/playlist?list=PLYizQ5FvN6pvIOcOd6dFZu3lQqc6zBGp2) playlist by Tuan Vu on Youtube
+The project deals with creating a recommendation engine of movies to the users.
 
-## Contents
+The project involves performing ETL on data based on Movie_Metadata , Movie_genre , Movie_Casting and the CPI index for the time the movies were released.
 
-| Part |      Title                | Git Tag |
-|------|---------------------------|---------|
-| 1    | [Introduction to Apache Airflow](https://youtu.be/AHMm1wfGuHE) ([blog post](https://www.applydatascience.com/airflow/airflow-tutorial-introduction/)) | [v0.1](https://github.com/tuanavu/airflow-tutorial/tree/v0.1) |
-| 2    | [Set up airflow environment with docker](https://youtu.be/vvr_WNzEXBE) ([blog post](https://www.applydatascience.com/airflow/set-up-airflow-env-with-docker/)) | [v0.2](https://github.com/tuanavu/airflow-tutorial/tree/v0.2) |
-| 3    | [Set up airflow environment using Google Cloud Composer](https://youtu.be/ld6JO3MiuPQ) ([blog post](https://www.applydatascience.com/airflow/set-up-airflow-with-google-composer/)) | N/A |
-| 4    | [Writing your first pipeline](https://youtu.be/43wHwwZhJMo) ([blog post](https://www.applydatascience.com/airflow/writing-your-first-pipeline/)) | N/A |
-| 5    | [Airflow concept](https://youtu.be/4rQSa2zEWfw) ([blog post](https://www.applydatascience.com/airflow/airflow-concept/)) | N/A |
-| 6    | [Build a data pipeline using Google Cloud Bigquery](https://youtu.be/wAyu5BN3VpY) ([blog post](https://www.applydatascience.com/airflow/bigquery-pipeline-airflow/)) | [v0.6](https://github.com/tuanavu/airflow-tutorial/tree/v0.6) |
-| 7    | [Airflow variables](https://youtu.be/bHQ7nzn0j6k) ([blog post](https://www.applydatascience.com/airflow/airflow-variables/)) | [v0.7](https://github.com/tuanavu/airflow-tutorial/tree/v0.7) |
+
+Using the information derived from the dataset, the system would be able to answer typical question like –
+
+a.	Which are the top movie genres based on the rating of the movie.
+b.	Does casting particular people help increase the popularity of the movie.
+c.	Finding out if releasing the film at a particular time - in a particular month might affect the revenue.
+d.	Which are the top 5 genres based on the CPI index.
+
+
+## Data sources
+
+The system uses data from 2 different sources : -
+1.	The movies , genre and cast data is based on the following Kaggle dataset.
+
+(https://www.kaggle.com/rounakbanik/the-movies-dataset)
+
+There are multiple files containing the data for movies , genre and cast data.
+These files contain metadata for all 45,000 movies listed in the Full MovieLens Dataset. The dataset consists of movies released on or before July 2017. Data points include cast, crew, plot keywords, budget, revenue, posters, release dates, languages, production companies, countries, TMDB vote counts and vote averages.
+This dataset also has files containing 26 million ratings from 270,000 users for all 45,000 movies. Ratings are on a scale of 1-5 and have been obtained from the official GroupLens website.
+
+
+
+2.	The CPI (consumer Price Index) Data is collected from the below source.
+
+(https://fred.stlouisfed.org/series/CUSR0000SS62031)
+
+
+This dataset contains Consumer Price Index for All Urban Consumers: Admission to Movies, Theaters, and Concerts in U.S. City Average
+
+
 
 
 ## Getting Started
