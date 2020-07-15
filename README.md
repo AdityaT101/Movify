@@ -15,7 +15,7 @@ d.	Which are the top 5 genres based on the CPI index.
 
 
 ## Data sources
-
+---
 The system uses data from 2 different sources : -
 1.	The movies , genre and cast data is based on the following Kaggle dataset.
 
@@ -36,16 +36,17 @@ The system uses data from 2 different sources : -
 
 
 ## Architecture and Schema
-
+---
 a.	The above mentioned APIs are used to load data into the local system. This data is in form of a bunch of CSV files. Amongst those, the following are staged on     the S3 bucket –
     1.	credits.csv
     2.	movies_metadata.csv
     3.	ratings.csv 
     4.	CPI.csv
             
-b.	Data is then staged from these files into the Staging tables in redshift using the COPY command. Further this staged data is converted into Dimension and Fact     tables on redshift itself. This is done using the Airflow scheduler where in each task is executed in a particular order. The schema for the facts and             dimensions is as shown below.
+b.	Data is then staged from these files into the Staging tables in redshift using the COPY command. Further this staged data is converted into Dimension and Fact     tables on redshift itself. This is done using the Airflow scheduler where in each task is executed in a particular order. The schema for the facts and  dimensions is as shown below.
 
-!![Movify](images/schema.PNG)
+
+![Movify](images/schema.png)
 
 
 
