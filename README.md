@@ -8,10 +8,10 @@ The project involves performing ETL on data based on Movie_Metadata , Movie_genr
 
 Using the information derived from the dataset, the system would be able to answer typical question like –
 
-a.	Which are the top movie genres based on the rating of the movie.
-b.	Does casting particular people help increase the popularity of the movie.
-c.	Finding out if releasing the film at a particular time - in a particular month might affect the revenue.
-d.	Which are the top 5 genres based on the CPI index.
+    a.	Which are the top movie genres based on the rating of the movie.
+    b.	Does casting particular people help increase the popularity of the movie.
+    c.	Finding out if releasing the film at a particular time - in a particular month might affect the revenue.
+    d.	Which are the top 5 genres based on the CPI index.
 
 
 ## Data sources
@@ -32,21 +32,45 @@ The system uses data from 2 different sources : -
     - (https://fred.stlouisfed.org/series/CUSR0000SS62031)
 
 
-      This dataset contains Consumer Price Index for All Urban Consumers: Admission to Movies, Theaters, and Concerts in U.S. City Average
+    This dataset contains Consumer Price Index for All Urban Consumers: Admission to Movies, Theaters, and Concerts in U.S. City Average
 
 
 ## Architecture and Schema
 ---
 a.	The above mentioned APIs are used to load data into the local system. This data is in form of a bunch of CSV files. Amongst those, the following are staged on     the S3 bucket –
-    1.	credits.csv
-    2.	movies_metadata.csv
-    3.	ratings.csv 
-    4.	CPI.csv
+    * credits.csv
+    * movies_metadata.csv
+    * ratings.csv 
+    * CPI.csv
             
-b.	Data is then staged from these files into the Staging tables in redshift using the COPY command. Further this staged data is converted into Dimension and Fact     tables on redshift itself. This is done using the Airflow scheduler where in each task is executed in a particular order. The schema for the facts and  dimensions is as shown below.
+b.	Data is then staged from these files into the Staging tables in redshift using the COPY command. Further this staged data is converted into Dimension and Fact     tables on redshift itself. This is done using the Airflow scheduler where in each task is executed in a particular order. The Architecture and schema for the facts and  dimensions is as shown below.
+
+![Movify](images/Architecture.png)
 
 
 ![Movify](images/schema.png)
+
+c.	For a staging the “Cast_staging “and the “Genre_staging” tables , some preprocessing is done on the data. This is cause the data is in form of a comma separated JSON structure. For eg, the genre column looks      like this – 
+    [{"id": 10749, "name": "Romance"}, {"id": 18, "name": "Drama"}, {"id": 9648, "name": "Mystery"}]
+
+    So to dump this into genre table,  ‘LoadGenreStagingOperator’ first ports in the Genre data from the S3 bucket.
+    Then it filters on the Genre_id and Genre_name and stores it in a dataframe object. This is then converted into a csv object
+    This csv object is further processed to enter the Genre_Data into the Staging table.
+
+	The Cast data is processed by ‘LoadCastStagingOperator’  in similar way to form the Cast_Staging table. 
+
+
+
+## Airflow Pipeline
+---
+
+![Movify](images/Data_pipeline.png)
+
+a.	The data-pipelining is done as follows. The data is ported from S3 into staging and then into Dimension/Fact tables. The tables are created earlier itself.
+b.	Further, we update the tables whenever new set of data is ported in based on the scheduler.
+c.	We also run the quality checks on fact and dimension tables after every cycle is complete.
+
+
 
 
 
